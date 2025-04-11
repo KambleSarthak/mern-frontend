@@ -1,9 +1,6 @@
 import io from "socket.io-client";
 
 export const createSocketConnection = () => {
-  if (window.location.hostname === "localhost") {
-    return io("http://localhost:7000");
-  } else {
-    return io("/", { path: "/api/socket.io" });
-  }
+  const socketUrl = process.env.REACT_APP_SOCKET_URL || "/";
+  return io(socketUrl, { path: "/api/socket.io" });
 };
