@@ -1,6 +1,14 @@
+// frontendtb/src/utils/socket.js
 import io from "socket.io-client";
 
 export const createSocketConnection = () => {
-  const socketUrl = process.env.REACT_APP_SOCKET_URL || "/";
-  return io(socketUrl, { path: "/api/socket.io" });
+  if (window.location.hostname === "localhost") {
+    return io("http://localhost:7000");
+  } else {
+    return io("https://mern-backend-one-lake.vercel.app", {
+      path: "/socket.io",
+      transports: ["websocket", "polling"],
+      secure: true
+    });
+  }
 };
